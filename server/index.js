@@ -44,7 +44,7 @@ const CARS_DATA = [
     rating: 4.8,
     people: 2,
     transmission: 'Automatic',
-    image: 'https://images.unsplash.com/photo-1555215695-3004980adbee?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&q=80&w=800',
     description: 'The BMW M4 Coupe combines sporty performance with everyday usability. Its powerful engine and agile handling make it a joy to drive.',
     owner: { name: 'David Lee', role: 'Owner', image: 'https://i.pravatar.cc/150?u=david' }
   }
