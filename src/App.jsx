@@ -265,12 +265,66 @@ const ProfileScreen = () => {
                     </div>
                     <h2 style={{ fontWeight: 900, fontSize: '2rem' }}>Robert Albert</h2>
                     <p style={{ color: 'var(--text-muted)', marginBottom: '40px' }}>Premium Member</p>
+                    
+                    <button className="btn btn-primary w-full mb-6" onClick={() => navigate('/add-car')}>
+                      Upload My Car (Owner)
+                    </button>
                 </div>
             </div>
             <BottomNav />
         </div>
     )
 }
+
+const AddCarScreen = () => {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '', brand: '', price: '', image: '', description: '', people: '4', transmission: 'Automatic'
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetch(`${API_BASE_URL}/cars`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    })
+    .then(res => res.json())
+    .then(() => {
+      alert('Car Uploaded Successfully! Buyers can now see your car.');
+      navigate('/home');
+    });
+  };
+
+  return (
+    <div className="p-6 flex flex-col fade-in" style={{ height: '100%', overflowY: 'auto' }}>
+      <Header title="Upload Car" />
+      <form onSubmit={handleSubmit} className="mt-8">
+        <div className="input-group">
+          <label className="input-label">Car Name</label>
+          <input type="text" className="input-field" placeholder="Ex: BMW M4" onChange={e => setFormData({...formData, name: e.target.value})} required />
+        </div>
+        <div className="input-group">
+          <label className="input-label">Brand</label>
+          <input type="text" className="input-field" placeholder="Ex: BMW" onChange={e => setFormData({...formData, brand: e.target.value})} required />
+        </div>
+        <div className="input-group">
+          <label className="input-label">Price per Day ($)</label>
+          <input type="number" className="input-field" placeholder="88" onChange={e => setFormData({...formData, price: e.target.value})} required />
+        </div>
+        <div className="input-group">
+          <label className="input-label">Image URL</label>
+          <input type="text" className="input-field" placeholder="Paste image link here" onChange={e => setFormData({...formData, image: e.target.value})} required />
+        </div>
+        <div className="input-group">
+          <label className="input-label">Description</label>
+          <textarea className="input-field" style={{ height: '100px' }} placeholder="Tell buyers about your car..." onChange={e => setFormData({...formData, description: e.target.value})} required></textarea>
+        </div>
+        <button className="btn btn-primary w-full mt-6" type="submit">Publish Car</button>
+      </form>
+    </div>
+  );
+};
 
 function App() {
   return (
@@ -285,6 +339,7 @@ function App() {
         <Route path="/payment" element={<PaymentScreen />} />
         <Route path="/summary" element={<SummaryScreen />} />
         <Route path="/profile" element={<ProfileScreen />} />
+        <Route path="/add-car" element={<AddCarScreen />} />
         <Route path="*" element={<HomeScreen />} />
       </Routes>
     </Router>
